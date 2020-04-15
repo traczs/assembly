@@ -1,0 +1,42 @@
+
+Source file: L9_2.X68
+Assembled on: 16-11-16 at: 19:49:19
+          by: X68K PC-2.2 Copyright (c) University of Teesside 1989,96
+Defaults: ORG $0/FORMAT/OPT A,BRL,CEX,CL,FRL,MC,MD,NOMEX,NOPCO
+
+    1  00008000                        ORG       $8000
+    2  00008000 363C04D2     START:    MOVE      #$4D2,D3
+    3  00008004 4E45                   TRAP      #5
+    4  00008006 4E4E                   TRAP      #14
+    5                        
+    6  00008024                        ORG       $8024
+    7  00008024 4EF900008500           JMP       T5
+    8                         
+    9  00008500                        ORG       $8500
+   10  00008500 3F03         T5:       MOVE      D3,-(SP)
+   11  00008502 61000008               BSR       DISPLAY
+   12  00008506 4FEF0002               LEA       2(SP),SP
+   13  0000850A 4E73                   RTE       
+   14  0000850C 4E56FFFC     DISPLAY:  LINK      A6,#-4
+   15  00008510 48A79000               MOVEM     D0/D3,-(SP)
+   16  00008514 4280                   CLR.L     D0
+   17  00008516 302E0008               MOVE.W    8(A6),D0
+   18  0000851A 81FC000A               DIVS      #10,D0
+   19  0000851E 3D40FFFC               MOVE.W    D0,-4(A6)
+   20  00008522 4840                   SWAP      D0
+   21  00008524 3D40FFFE               MOVE.W    D0,-2(A6)
+   22  00008528 0C6E0000FFFC           CMPI.W    #0,-4(A6)
+   23  0000852E 6700000C               BEQ       ELSE
+   24  00008532 3F2EFFFC               MOVE.W    -4(A6),-(SP)
+   25  00008536 61D4                   BSR       DISPLAY
+   26  00008538 4FEF0002               LEA       2(SP),SP
+   27  0000853C 4240         ELSE:     CLR       D0
+   28  0000853E 302EFFFE               MOVE.W    -2(A6),D0
+   29  00008542 06400030               ADD       #$30,D0
+   30  00008546 4E41                   TRAP      #1
+   31  00008548 4C9F0009               MOVEM     (SP)+,D0/D3
+   32  0000854C 4E5E                   UNLK      A6
+   33  0000854E 4E75                   RTS       
+   34           00008000               END       START
+
+Lines: 34, Errors: 0, Warnings: 0.

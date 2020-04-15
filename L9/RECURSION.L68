@@ -1,0 +1,43 @@
+00008500 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.02
+Created On: 11/16/2016 7:35:49 PM
+
+00008500                             1      ORG $8500
+00008500  4FF9 00009000              2  MAIN  LEA $9000,SP
+00008506  3F3C 04D2                  3      MOVE #1234,-(SP)
+0000850A  6100 0008                  4      BSR DISPLAY
+0000850E  4FEF 0002                  5      LEA 2(SP),SP
+00008512  4E49                       6      TRAP #9
+00008514  4E56 FFFC                  7  DISPLAY LINK A6,#-4
+00008518  48A7 C000                  8      MOVEM D0-D1,-(SP)
+0000851C  4280                       9      CLR.L D0
+0000851E  302E 0008                 10      MOVE.W 8(A6),D0
+00008522  81FC 000A                 11      DIVS #10,D0
+00008526  3D40 FFFC                 12      MOVE.W D0,-4(A6)
+0000852A  4840                      13      SWAP D0
+0000852C  3D40 FFFE                 14      MOVE.W D0,-2(A6)
+00008530  0C6E 0000 FFFC            15      CMPI.W #0,-4(A6)
+00008536  6700 000C                 16      BEQ ELSE
+0000853A  3F2E FFFC                 17      MOVE.W -4(A6),-(SP)
+0000853E  61D4                      18      BSR DISPLAY
+00008540  4FEF 0002                 19      LEA 2(SP),SP
+00008544  4240                      20  ELSE CLR D0 
+00008546  322E FFFE                 21      MOVE.W -2(A6),D1
+0000854A  0641 0030                 22      ADD #$30,D1
+0000854E  303C 0006                 23      MOVE #6,D0
+00008552  4E4F                      24      TRAP #15
+00008554  4C9F 0003                 25      MOVEM (SP)+,D0-D1
+00008558  4E5E                      26      UNLK A6
+0000855A  4E75                      27      RTS
+0000855C                            28      END MAIN
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+DISPLAY             8514
+ELSE                8544
+MAIN                8500

@@ -1,0 +1,50 @@
+
+Source file: KEYTEST.X68
+Assembled on: 16-11-23 at: 19:36:47
+          by: X68K PC-2.2 Copyright (c) University of Teesside 1989,96
+Defaults: ORG $0/FORMAT/OPT A,BRL,CEX,CL,FRL,MC,MD,NOMEX,NOPCO
+
+    1           0000C001     DUART:    EQU       $00C001               ;;base address of 68681
+    2           0000001C     OPR_SET:  EQU       14*2                  ;;set bit command reg.
+    3           0000001E     OPR_CLR:  EQU       15*2                  ;;clear bit cmd. reg.
+    4           00000002     SRA:      EQU       2
+    5           00000006     RBA:      EQU       6
+    6                        
+    7  00008000                        ORG       $8000
+    8  00008000 227C00008062 MESSAGE:  MOVEA.L   #TEXT,A1
+    9  00008006 61000004               BSR       PRINT
+   10  0000800A 4E4E                   TRAP      #14
+   11                            
+   12  0000800C 2F00         PRINT:    MOVE.L    D0,-(A7)
+   13  0000800E 2F08         INCHR:    MOVE.L    A0,-(A7)
+   14  00008010 3F07                   MOVE.W    D7,-(A7)
+   15  00008012 207C0000C001           MOVEA.L   #DUART,A0
+   16  00008018 1E280002     INCHR2:   MOVE.B    SRA(A0),D7
+   17  0000801C 02070001               ANDI.B    #1,D7
+   18  00008020 67F6                   BEQ       INCHR2
+   19  00008022 10280006               MOVE.B    RBA(A0),D0
+   20  00008026 020000FF               ANDI.B    #$FF,D0
+   21  0000802A 1200                   MOVE.B    D0,D1
+   22  0000802C 4EB900008050           JSR       OUT681
+   23  00008032 3E1F                   MOVE.W    (A7)+,D7
+   24  00008034 205F                   MOVE.L    (A7)+,A0
+   25  00008036 1001                   MOVE.B    D1,D0
+   26  00008038 0C400071               CMPI      #$71,D0
+   27  0000803C 67000006               BEQ       EXIT
+   28  00008040 12C0                   MOVE.B    D0,(A1)+
+   29  00008042 60CA                   BRA       INCHR
+   30  00008044 201F         EXIT:     MOVE.L    (A7)+,D0
+   31  00008046 12FC000D               MOVE.B    #$0D,(A1)+
+   32  0000804A 12FC0000               MOVE.B    #0,(A1)+
+   33  0000804E 4E75                   RTS       
+   34                            
+   35  00008050 117C00FF001E OUT681:   MOVE.B    #$FF,OPR_CLR(A0)
+   36  00008056 1140001E               MOVE.B    D0,OPR_CLR(A0)        ;;clr. bits, set pins
+   37  0000805A 1140001C               MOVE.B    D0,OPR_SET(A0)        ;;set bits, clr. pins
+   38  0000805E 4600                   NOT.B     D0                    ;;restore D0
+   39  00008060 4E75                   RTS       
+   40                        
+   41  00008062 00000004     TEXT:     DS.L      1
+   42           00008000               END       MESSAGE
+
+Lines: 42, Errors: 0, Warnings: 0.

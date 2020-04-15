@@ -1,0 +1,45 @@
+
+Source file: Q1.X68
+Assembled on: 16-11-23 at: 19:01:47
+          by: X68K PC-2.2 Copyright (c) University of Teesside 1989,96
+Defaults: ORG $0/FORMAT/OPT A,BRL,CEX,CL,FRL,MC,MD,NOMEX,NOPCO
+
+    1           0000C001     DUART:    EQU       $C001
+    2           00000002     SRA:      EQU       2
+    3           00000006     TBA:      EQU       6
+    4           0000000D     CR:       EQU       $0D
+    5           0000000A     LF:       EQU       $0A
+    6                        
+    7  00008000                        ORG       $8000
+    8  00008000 3E3C000A     MESSAGE:  MOVE.W    #10,D7
+    9  00008004 227C00008012           MOVEA.L   #TEXT,A1
+   10  0000800A 61000038               BSR       PRINT
+   11  0000800E 5347                   SUBQ      #1,D7
+   12  00008010 4E4E                   TRAP      #14
+   13                            
+   14  00008012 0D0A48454C4C TEXT:     DC.B      CR,LF,'HELLO WORLD'
+                4F20574F524C
+                44          
+   15  0000801F 205445535400           DC.B      ' TEST',0
+   16                            
+   17  00008026 2F08         OUTCHR:   MOVE.L    A0,-(A7)
+   18  00008028 3F07                   MOVE.W    D7,-(A7)
+   19  0000802A 207C0000C001           MOVEA.L   #DUART,A0
+   20  00008030 1E280002     OUTCHR2:  MOVE.B    SRA(A0),D7
+   21  00008034 02070004               ANDI.B    #4,D7
+   22  00008038 67F6                   BEQ       OUTCHR2
+   23  0000803A 11400006               MOVE.B    D0,TBA(A0)
+   24  0000803E 3E1F                   MOVE.W    (A7)+,D7
+   25  00008040 205F                   MOVE.L    (A7)+,A0
+   26  00008042 4E75                   RTS       
+   27                            
+   28  00008044 2F00         PRINT:    MOVE.L    D0,-(A7)
+   29  00008046 1019         PRINT2:   MOVE.B    (A1)+,D0
+   30  00008048 67000006               BEQ       EXIT
+   31  0000804C 61D8                   BSR       OUTCHR
+   32  0000804E 60F6                   BRA       PRINT2
+   33  00008050 201F         EXIT:     MOVE.L    (A7)+,D0
+   34  00008052 4E75                   RTS       
+   35           00008000               END       MESSAGE
+
+Lines: 35, Errors: 0, Warnings: 0.

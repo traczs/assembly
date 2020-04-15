@@ -1,0 +1,34 @@
+
+Source file: L8_2.X68
+Assembled on: 16-11-09 at: 17:59:07
+          by: X68K PC-2.2 Copyright (c) University of Teesside 1989,96
+Defaults: ORG $0/FORMAT/OPT A,BRL,CEX,CL,FRL,MC,MD,NOMEX,NOPCO
+
+    1  00008000                        ORG       $8000
+    2  00008000 343C0002     START:    MOVE.W    #2,D2
+    3  00008004 363C0003               MOVE.W    #3,D3
+    4  00008008 383C0004               MOVE.W    #4,D4
+    5                                  LEA       $9020,                ;SP
+***** Missing operand(s).
+    6  0000800C 3F02                   MOVE.W    D2,-(SP)
+    7  0000800E 3F03                   MOVE.W    D3,-(SP)
+    8  00008010 3F04                   MOVE.W    D4,-(SP)
+    9  00008012 4EB90000801E           JSR       SOLVEQUAD
+   10  00008018 4FEF0006               LEA       6(SP),SP
+   11  0000801C 4E4E                   TRAP      #14
+   12  0000801E 48E73800     SOLVEQUAD: MOVEM.L   D2-D4,-(SP)
+   13  00008022 342F0014               MOVE.W    20(SP),D2
+   14  00008026 C5C2                   MULS.W    D2,D2
+   15  00008028 C5FC0005               MULS.W    #5,D2
+   16  0000802C 362F0014               MOVE.W    20(SP),D3
+   17  00008030 C7FC0002               MULS      #2,D3
+   18  00008034 382F0012               MOVE.W    18(SP),D4
+   19  00008038 C7C4                   MULS      D4,D3
+   20  0000803A 382F0010               MOVE.W    16(SP),D4
+   21  0000803E C9C4                   MULS      D4,D4
+   22  00008040 9443                   SUB.W     D3,D2
+   23  00008042 D444                   ADD.W     D4,D2
+   24  00008044 4E75                   RTS       
+   25           00008000               END       START
+
+Lines: 25, Errors: 1, Warnings: 0.

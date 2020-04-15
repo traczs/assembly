@@ -1,0 +1,39 @@
+
+Source file: Q2.X68
+Assembled on: 16-11-23 at: 19:04:43
+          by: X68K PC-2.2 Copyright (c) University of Teesside 1989,96
+Defaults: ORG $0/FORMAT/OPT A,BRL,CEX,CL,FRL,MC,MD,NOMEX,NOPCO
+
+    1           0000C001     DUART:    EQU       $C001
+    2           00000002     SRA:      EQU       2
+    3           00000006     RBA:      EQU       6
+    4                        
+    5  00008000                        ORG       $8000
+    6  00008000 227C00008042 MESSAGE:  MOVEA.L   #TEXT,A1
+    7  00008006 61000004               BSR       PRINT
+    8  0000800A 4E4E                   TRAP      #14
+    9                            
+   10  0000800C 2F00         PRINT:    MOVE.L    D0,-(A7)
+   11  0000800E 2F08         INCHR:    MOVE.L    A0,-(A7)
+   12  00008010 3F07                   MOVE.W    D7,-(A7)
+   13  00008012 207C0000C001           MOVEA.L   #DUART,A0
+   14  00008018 1E280002     INCHR2:   MOVE.B    SRA(A0),D7
+   15  0000801C 02070001               ANDI.B    #1,D7
+   16  00008020 67F6                   BEQ       INCHR2
+   17  00008022 10280006               MOVE.B    RBA(A0),D0
+   18  00008026 3E1F                   MOVE.W    (A7)+,D7
+   19  00008028 205F                   MOVE.L    (A7)+,A0
+   20  0000802A 0C40000D               CMPI      #$0D,D0
+   21  0000802E 67000006               BEQ       EXIT
+   22  00008032 12C0                   MOVE.B    D0,(A1)+
+   23  00008034 60D8                   BRA       INCHR
+   24  00008036 201F         EXIT:     MOVE.L    (A7)+,D0
+   25  00008038 12FC000D               MOVE.B    #$0D,(A1)+
+   26  0000803C 12FC0000               MOVE.B    #0,(A1)+
+   27                           
+   28  00008040 4E75                   RTS       
+   29                        
+   30  00008042 00000004     TEXT:     DS.L      1
+   31           00008000               END       MESSAGE
+
+Lines: 31, Errors: 0, Warnings: 0.

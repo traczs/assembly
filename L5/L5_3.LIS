@@ -1,0 +1,25 @@
+
+Source file: L5_3.X68
+Assembled on: 16-10-19 at: 19:51:41
+          by: X68K PC-2.2 Copyright (c) University of Teesside 1989,96
+Defaults: ORG $0/FORMAT/OPT A,BRL,CEX,CL,FRL,MC,MD,NOMEX,NOPCO
+
+    1                        *L5_3.x68     
+    2                        
+    3  00008000                        ORG       $8000
+    4  00008000 103900009000 START:    MOVE.B    HEX,D0
+    5  00008006 1200                   MOVE.B    D0,D1
+    6  00008008 06010030               ADD.B     #$30,D1
+    7  0000800C 0C010039               CMPI.B    #$39,D1
+    8  00008010 6F00000C               BLE       QUIT
+    9  00008014 3401                   MOVE      D1,D2
+   10  00008016 5E02                   ADD.B     #7,D2
+   11  00008018 13C200009001           MOVE.B    D2,CHAR
+   12  0000801E 4E4E         QUIT:     TRAP      #14
+   13                         
+   14  00009000                        ORG       $9000
+   15  00009000 0A           HEX:      DC.B      $A
+   16  00009001 00000001     CHAR:     DS.B      1
+   17           00008000               END       START
+
+Lines: 17, Errors: 0, Warnings: 0.

@@ -1,0 +1,48 @@
+00008000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.02
+Created On: 10/26/2016 8:09:33 PM
+
+00000000                             1  *L6_3.x68     
+00000000                             2  
+00008000                             3      ORG $8000
+00008000  41F9 00009000              4  START  LEA MATRIX,A0
+00008006  0C00 0002                  5  OUT_   CMPI.B #2,d0
+0000800A  6E00 0032                  6         BGT EXIT
+0000800E  1200                       7         MOVE.B d0,d1
+00008010  5201                       8         add.b #1,d1
+00008012  0C01 0003                  9  IN_    CMPI.B #3,d1
+00008016  6E00 0024                 10         BGT ADD_I
+0000801A  1600                      11         move.b d0,d3
+0000801C  C7FC 0004                 12         muls #4,d3
+00008020  D601                      13         add.b d1,d3
+00008022  1430 3800                 14         move.b (A0,d3.l),d2
+00008026  1801                      15         move.b d1,d4
+00008028  C9FC 0004                 16         muls #4,d4
+0000802C  D800                      17         add.b d0,d4
+0000802E  11B0 4800 3800            18         move.b (A0,d4.l),(A0,d3.l)
+00008034  1182 4800                 19         move.b d2,(A0,d4.l)
+00008038  5201                      20         add.b #1,d1
+0000803A  60D6                      21         BRA IN_
+0000803C  5200                      22  ADD_I  Add.b #1,d0
+0000803E  4E49                      23  EXIT   trap #9
+00008040                            24   
+00009000                            25      ORG $9000       
+00009000= 01 02 03 04               26  MATRIX DC.B 1,2,3,4
+00009004= 05 06 07 08               27         DC.B 5,6,7,8
+00009008= 09 0A 0B 0C               28         DC.B 9,10,11,12
+0000900C= 0D 0E 0F 10               29         DC.B 13,14,15,16
+00009010                            30      END START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ADD_I               803C
+EXIT                803E
+IN_                 8012
+MATRIX              9000
+OUT_                8006
+START               8000

@@ -1,0 +1,40 @@
+00008000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.02
+Created On: 10/26/2016 8:08:46 PM
+
+00000000                             1  *L6_2.x68     
+00000000                             2  
+00008000                             3      ORG $8000
+00008000  41F9 00009000              4  START  LEA STR1,A0
+00008006  43F9 00009020              5         LEA STR2,A1
+0000800C  1038 00FF                  6         move.b $FF,d0
+00008010  1218                       7  START1 move.b (A0)+,d1
+00008012  1419                       8         move.b (A1)+,d2
+00008014  B242                       9         cmp d2,d1
+00008016  6700 0006                 10         beq exit1
+0000801A  103C 0000                 11         move.b #0,d0
+0000801E  0C10 000D                 12  exit1  cmpi.b #$d,(A0)
+00008022  6700 0008                 13         beq EXIT
+00008026  B038 00FF                 14         cmp.b $FF,d0
+0000802A  66E4                      15         bne START1       
+0000802C  4E49                      16  EXIT   trap #9
+0000802E                            17   
+00009000                            18      ORG $9000
+00009000= 68 65 6C 6C 6F 0D         19  STR1  dc.b 'hello',$D
+00009020                            20      ORG $9020
+00009020= 68 65 6C 6C 6F 0D         21  STR2 dc.b 'hello',$D    
+00009026                            22      END START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+EXIT                802C
+EXIT1               801E
+START               8000
+START1              8010
+STR1                9000
+STR2                9020
